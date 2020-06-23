@@ -1,6 +1,6 @@
 # **Docker Application Template**
 
-[![actions-workflow-test][actions-workflow-test-badge]][actions-workflow-test]
+![](https://github.com/jealvarez/docker-application/workflows/Test/badge.svg)
 
 Provides the configuration to run any application in a docker container.
 
