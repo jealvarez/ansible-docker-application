@@ -1,6 +1,7 @@
 # **Docker Application Template**
 
-![](https://github.com/jealvarez/docker-application/workflows/Test/badge.svg)
+[![Build Status](https://github.com/jealvarez/docker-application/workflows/Test/badge.svg)](https://github.com/jealvarez/docker-application/actions?query=workflow%3ATest)
+[![Latest Stable Version](https://img.shields.io/github/v/release/jealvarez/docker-application?sort?newer)](https://github.com/jealvarez/docker-application/releases)
 
 Provides the configuration to run any application in a docker container.
 
