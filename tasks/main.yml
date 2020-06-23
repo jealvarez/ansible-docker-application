@@ -1,0 +1,15 @@
+---
+- name: configure required packages
+  include: packages.yml
+
+- name: configure docker registry
+  include: registry.yml
+
+- name: configure docker application
+  include: docker-application.yml
+
+- name: configure system unit
+  include: system-unit.yml
+
+- name: cleanup
+  include: cleanup.yml

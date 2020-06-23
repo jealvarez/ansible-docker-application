@@ -1,0 +1,37 @@
+---
+- name: install the containerd rpm from a remote repository
+  yum:
+    name:  https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm
+    state: present
+
+- name: add the docker oficial repository
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docer-ce.repo
+
+- name: enable docker-ce oficial repository
+  ini_file:
+    dest: /etc/yum.repos.d/docer-ce.repo
+    section: 'docker-ce-stable'
+    option: enabled
+
+- name: install packages
+  package:
+    name: ['docker-ce', 'docker-ce-cli', 'python3-pip']
+    state: present
+
+- name: check that the docker.sock exists
+  stat:
+    path: /var/run/docker.sock
+  register: docker_sock_stat_result
+
+- name: make sure docker service is running
+  systemd:
+    state: started
+    name: docker
+  when: not docker_sock_stat_result.stat.exists
+
+- name: install python libraries
+  pip:
+    name: ['docker', 'docker-compose']
+    state: present
