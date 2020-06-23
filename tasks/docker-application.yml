@@ -1,0 +1,60 @@
+---
+- name: create application folder structure
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - "/opt/apps/{{ application_name }}"
+
+- name: get docker named volumes
+  set_fact:
+    named_volume_entries: "{{ named_volume_entries | default([]) + [ item ] }}"
+  loop: "{{ docker_volumes }}"
+  when: docker_volumes is defined and item.type == 'volume'
+
+- name: create directories for docker named volumes
+  file: 
+    path: "/opt/apps/{{ application_name }}/volumes/{{ item.source }}"
+    state: directory
+  loop: "{{ named_volume_entries }}"
+  when: named_volume_entries is defined
+
+- name: create docker named volumes
+  shell: >
+          docker volume create \
+            --driver local \
+            --opt type=none \
+            --opt o=bind \
+            --opt device=/opt/apps/{{ application_name }}/volumes/{{ item.source }} \
+            {{ application_name }}-{{ item.source }}
+  loop: "{{ named_volume_entries }}"
+  when: named_volume_entries is defined
+
+- name: get docker bound volumes
+  set_fact:
+    bound_volume_entries: "{{ bound_volume_entries | default([]) + [ item ] }}"
+  loop: "{{ docker_volumes }}"
+  when: docker_volumes is defined and item.type == 'bind'
+
+- name: create directories for docker bound volumes
+  file: 
+    path: "/opt/apps/{{ application_name }}/volumes/{{ item.source }}"
+    state: directory
+  loop: "{{ bound_volume_entries }}"
+  when: bound_volume_entries is defined and item.external == false
+
+- name: copy the application docker compose file
+  template:
+    src: docker-compose.yml.j2
+    dest: "/opt/apps/{{ application_name }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: copy the application docker compose override file
+  template:
+    src: docker-compose.override.yml.j2
+    dest: "/opt/apps/{{ application_name }}/docker-compose.override.yml"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r

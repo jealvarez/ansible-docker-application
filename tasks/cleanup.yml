@@ -1,0 +1,10 @@
+---
+- name: clear docker named volumes
+  set_fact:
+    named_volume_entries: []
+  when: named_volume_entries is defined
+
+- name: clear docker bound volumes
+  set_fact:
+    bound_volume_entries: []
+  when: bound_volume_entries is defined

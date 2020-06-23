@@ -1,0 +1,14 @@
+galaxy_info:
+  author: Jorge Alvarez <alvarez.jeap@gmail.com>
+  description: Configure docker application
+
+  license: license (GPLv2, CC-BY, etc)
+
+  min_ansible_version: 1.2
+
+  galaxy_tags: 
+    - docker
+
+dependencies: []
+
+allow_duplicates: false

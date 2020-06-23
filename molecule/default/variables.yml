@@ -1,0 +1,28 @@
+application_name: nginx
+auto_startup: n
+docker_registry_private: n
+docker_container_name: nginx
+docker_image_name: nginx
+docker_image_tag: latest
+docker_ports:
+  - "8080:8080"
+docker_volumes:
+  - type: volume
+    source: test
+    destination: /test
+    directory: 'true'
+  - type: bind
+    source: /root/test
+    destination: ~/test
+    directory: 'true'
+    external: 'true'
+  - type: bind
+    source: /root
+    destination: ~/test.txt
+    directory: 'false'
+    external: 'true'
+    file: test.txt
+docker_environment_variables:
+  - "VARIABLE: VALUE"
+docker_extra_hosts:
+  - "HOST:IP"
