@@ -30,8 +30,8 @@ def test_container(host):
 
 
 @pytest.mark.parametrize("path", [
-    ("/opt/apps/nginx/docker-compose.yml"),
-    ("/opt/apps/nginx/docker-compose.override.yml"),
+    ("/opt/test/apps/nginx/docker-compose.yml"),
+    ("/opt/test/apps/nginx/docker-compose.override.yml"),
     ("/lib/systemd/system/nginx.service")
 ])
 def test_files_creation(host, path):
@@ -41,7 +41,7 @@ def test_files_creation(host, path):
 
 
 @pytest.mark.parametrize("path", [
-    ("/opt/apps/nginx/volumes/test")
+    ("/opt/test/apps/nginx/volumes/test")
 ])
 def test_named_volumes_creation(host, path):
     file = host.file(path)
@@ -60,8 +60,8 @@ def test_bind_volumes_creation(host, path):
 
 
 @pytest.mark.parametrize("actual_file, expected_file", [
-    ("/opt/apps/nginx/docker-compose.yml", "/root/test/resources/docker-compose-expected.yml"),
-    ("/opt/apps/nginx/docker-compose.override.yml", "/root/test/resources/docker-compose-expected.override.yml"),
+    ("/opt/test/apps/nginx/docker-compose.yml", "/root/test/resources/docker-compose-expected.yml"),
+    ("/opt/test/apps/nginx/docker-compose.override.yml", "/root/test/resources/docker-compose-expected.override.yml"),
     ("/lib/systemd/system/nginx.service", "/root/test/resources/nginx-expected.service"),
 
 ])

@@ -4,7 +4,7 @@
     path: "{{ item }}"
     state: directory
   loop:
-    - "/opt/apps/{{ application_name }}"
+    - "/opt/{{ workspace }}/apps/{{ application_name }}"
 
 - name: get docker named volumes
   set_fact:
@@ -14,7 +14,7 @@
 
 - name: create directories for docker named volumes
   file: 
-    path: "/opt/apps/{{ application_name }}/volumes/{{ item.source }}"
+    path: "/opt/{{ workspace }}/apps/{{ application_name }}/volumes/{{ item.source }}"
     state: directory
   loop: "{{ named_volume_entries }}"
   when: named_volume_entries is defined
@@ -25,7 +25,7 @@
             --driver local \
             --opt type=none \
             --opt o=bind \
-            --opt device=/opt/apps/{{ application_name }}/volumes/{{ item.source }} \
+            --opt device=/opt/{{ workspace }}/apps/{{ application_name }}/volumes/{{ item.source }} \
             {{ application_name }}-{{ item.source }}
   loop: "{{ named_volume_entries }}"
   when: named_volume_entries is defined
@@ -38,7 +38,7 @@
 
 - name: create directories for docker bound volumes
   file: 
-    path: "/opt/apps/{{ application_name }}/volumes/{{ item.source }}"
+    path: "/opt/{{ workspace }}/apps/{{ application_name }}/volumes/{{ item.source }}"
     state: directory
   loop: "{{ bound_volume_entries }}"
   when: bound_volume_entries is defined and item.external == false
@@ -46,7 +46,7 @@
 - name: copy the application docker compose file
   template:
     src: docker-compose.yml.j2
-    dest: "/opt/apps/{{ application_name }}/docker-compose.yml"
+    dest: "/opt/{{ workspace }}/apps/{{ application_name }}/docker-compose.yml"
     owner: root
     group: root
     mode: u=rw,g=r,o=r
@@ -54,7 +54,7 @@
 - name: copy the application docker compose override file
   template:
     src: docker-compose.override.yml.j2
-    dest: "/opt/apps/{{ application_name }}/docker-compose.override.yml"
+    dest: "/opt/{{ workspace }}/apps/{{ application_name }}/docker-compose.override.yml"
     owner: root
     group: root
     mode: u=rw,g=r,o=r

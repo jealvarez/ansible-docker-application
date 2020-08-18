@@ -1,3 +1,4 @@
+workspace: test
 application_name: nginx
 auto_startup: n
 docker_registry_private: n
