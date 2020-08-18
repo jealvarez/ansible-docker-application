@@ -1,4 +1,5 @@
 ---
+workspace: workspace
 application_name: application
 auto_startup: y
 docker_registry_url:

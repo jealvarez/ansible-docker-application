@@ -14,14 +14,16 @@ Jorge Alvarez <alvarez.jeap@gmail.com>
 - Ansible 2.6+
 - Python 3+
 - Pip3
+- [direnv](https://direnv.net)
+- [pyenv](https://github.com/pyenv/pyenv)
 
 ## **Setting Up the Environment**
 
 - Set python virtual environment
 
 ```sh
-python -m venv .env
-source .env/bin/activate
+virtualenv .env --python=$(cat .python-version)
+direnv allow
 pip install -r requirements.txt
 ```
 
@@ -38,6 +40,7 @@ molecule test --all
 ### **Variables**
 
 ```text
+workspace: workspace
 application_name: application
 auto_startup: y
 docker_registry_url:
@@ -54,6 +57,8 @@ docker_extra_hosts: []
 ```
 
 #### **Variables Description**
+
+- **workspace**. It will be the working directory where will be deployed the applications under `/opt/{{ workspace }}/{{ application_name}}`.
 
 - **docker_ports**. It will define the ports available for the docker container.
 
@@ -133,6 +138,7 @@ docker_extra_hosts:
   roles:
     - docker-application
   vars:
+    workspace: deployments
     application_name: nginx
     auto_startup: y
     docker_registry_url: https://docker-registry.private.com/
