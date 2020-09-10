@@ -1,3 +1,4 @@
+---
 workspace: test
 application_name: nginx
 auto_startup: n
@@ -11,19 +12,25 @@ docker_volumes:
   - type: volume
     source: test
     destination: /test
-    directory: 'true'
+    directory: true
+  - type: volume
+    source: test1
+    destination: /test1
+    directory: true
+    create: "n"
   - type: bind
     source: /root/test
     destination: ~/test
-    directory: 'true'
-    external: 'true'
+    directory: true
+    external: true
   - type: bind
     source: /root
     destination: ~/test.txt
-    directory: 'false'
-    external: 'true'
+    directory: false
+    external: true
     file: test.txt
 docker_environment_variables:
-  - "VARIABLE: VALUE"
+  - name: VARIABLE
+    value: VALUE
 docker_extra_hosts:
   - "HOST:IP"

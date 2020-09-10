@@ -17,7 +17,7 @@
     path: "/opt/{{ workspace }}/apps/{{ application_name }}/volumes/{{ item.source }}"
     state: directory
   loop: "{{ named_volume_entries }}"
-  when: named_volume_entries is defined
+  when: named_volume_entries is defined and item.create is not defined
 
 - name: create docker named volumes
   shell: >
@@ -28,7 +28,7 @@
             --opt device=/opt/{{ workspace }}/apps/{{ application_name }}/volumes/{{ item.source }} \
             {{ application_name }}-{{ item.source }}
   loop: "{{ named_volume_entries }}"
-  when: named_volume_entries is defined
+  when: named_volume_entries is defined and item.create is not defined
 
 - name: get docker bound volumes
   set_fact:
