@@ -1,4 +1,4 @@
-#jinja2: lstrip_blocks: True
+#jinja2: lstrip_blocks: "False", trim_blocks: "False", rstrip_blocks: "False"
 # =====================================================================
 # FILE GENERATED AUTOMATICALLY WITH THE CONFIGURATION MANAGEMENT TOOL
 # THIS FILE SHOULD NOT BE EDITED BY HAND
@@ -14,6 +14,12 @@ services:
     {% if docker_user is not none %}
     user: {{ docker_user }}
     {% endif %}
+    {% if docker_command is not none and docker_command|length > 0 %}
+    command: {{ docker_command }}
+    {% endif %}
+    {% if docker_entrypoint is not none and docker_entrypoint|length > 0 %}
+    entrypoint: {{ docker_entrypoint }}
+    {% endif %}
     {% if docker_ports is defined and docker_ports|length > 0 %}
     ports:
     {% for port in docker_ports %}
@@ -24,15 +30,15 @@ services:
     volumes:
         {% if named_volume_entries is defined and named_volume_entries is not none %}
         {% for named_volume_entry in named_volume_entries %}
-        - {{ application_name }}-{{ named_volume_entry.source }}:{{ named_volume_entry.destination }}
+        - {{ application_name + "-" if named_volume_entry.create is not defined else ""}}{{ named_volume_entry.source }}:{{ named_volume_entry.destination }}
         {% endfor %}
         {% endif %}
         {% if bound_volume_entries is defined and bound_volume_entries is not none %}
         {% for bound_volume_entry in bound_volume_entries %}
-        {% if bound_volume_entry.directory == 'true' %}
-        - {{ '' if bound_volume_entry.external == 'true' else './volumes/' }}{{ bound_volume_entry.source }}:{{ bound_volume_entry.destination }}
+        {% if bound_volume_entry.directory %}
+        - {{ '' if bound_volume_entry.external else './volumes/' }}{{ bound_volume_entry.source }}:{{ bound_volume_entry.destination }}
         {% else %}
-        - {{ '' if bound_volume_entry.external == 'true' else './volumes/' }}{{ bound_volume_entry.source }}/{{ bound_volume_entry.file }}:{{ bound_volume_entry.destination }}
+        - {{ '' if bound_volume_entry.external else './volumes/' }}{{ bound_volume_entry.source }}/{{ bound_volume_entry.file }}:{{ bound_volume_entry.destination }}
         {% endif %}
         {% endfor %}
         {% endif %}
@@ -40,7 +46,7 @@ services:
     {% if docker_environment_variables is defined and docker_environment_variables|length > 0 %}
     environment:
     {% for variable in docker_environment_variables %}
-        {{ variable }}
+        {{ variable.name }}: {{ variable.value | indent(12) }}
     {% endfor %}
     {% endif %}
     {% if docker_extra_hosts is defined and docker_extra_hosts|length > 0 %}
@@ -53,7 +59,7 @@ services:
 {% if named_volume_entries is defined and named_volume_entries is not none and named_volume_entries %}
 volumes:
 {% for named_volume_entry in named_volume_entries %}
-  {{ application_name }}-{{ named_volume_entry.source }}:
+  {{ application_name + "-" if named_volume_entry.create is not defined else ""}}{{ named_volume_entry.source }}:
     external: true
 {% endfor %}
 {% endif %}

@@ -50,6 +50,15 @@ def test_named_volumes_creation(host, path):
 
 
 @pytest.mark.parametrize("path", [
+    ("/opt/test/apps/nginx/volumes/test1")
+])
+def test_named_volumes_no_creation(host, path):
+    file = host.file(path)
+
+    assert file.exists == False
+
+
+@pytest.mark.parametrize("path", [
     ("/root/test.txt"),
     ("/root/test")
 ])

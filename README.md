@@ -50,6 +50,8 @@ docker_registry_private: n
 docker_image_name:
 docker_image_tag:
 docker_user:
+docker_command: []
+docker_entrypoint: []
 docker_ports: []
 docker_volumes: []
 docker_environment_variables: []
@@ -78,6 +80,7 @@ docker_ports:
       directory:
       file:
       external:
+      create:
   ```
 
   - Volume types:
@@ -86,6 +89,7 @@ docker_ports:
       - source. name of the `named` docker volume
       - destination. path inside of the container
       - directory. always `true`
+      - create. if the attribute is not present then will create a docker volume directory, otherwise, `n` it will assume that the docker volume already exists
 
       ```text
       docker_volumes: 
@@ -93,6 +97,7 @@ docker_ports:
           source: pg-data
           destination: /var/lib/postgresql/data
           directory: true
+          create: "n"
       ```
 
     - **bind**. It will mount in the container a directory that already exists
@@ -149,7 +154,7 @@ docker_extra_hosts:
     docker_image_tag: latest
     docker_user: root
     docker_ports:
-      - 80:80
+      - "80:80"
     docker_volumes:
       - type: bind
         source: conf
@@ -160,5 +165,5 @@ docker_extra_hosts:
     docker_environment_variables:
       - "VAR1: VALUE1"
     docker_extra_hosts:
-      - HOST1:IP1
+      - "HOST1:IP1"
 ```
