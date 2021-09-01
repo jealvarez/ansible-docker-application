@@ -1,5 +1,4 @@
 galaxy_info:
-  namespace: jealvarez
   role_name: docker_application
   author: Jorge Alvarez <alvarez.jeap@gmail.com>
   description: Configure docker application
