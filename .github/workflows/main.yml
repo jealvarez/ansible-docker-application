@@ -35,6 +35,7 @@ jobs:
             stable"
           sudo apt-get update
           sudo apt-get install docker-ce docker-ce-cli containerd.io
+          echo "roles_path = /etc/ansible/roles:../../ansible-roles/roles" > ansible.cfg
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements.txt
       
