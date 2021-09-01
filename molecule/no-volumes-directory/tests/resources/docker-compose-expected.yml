@@ -19,18 +19,8 @@ services:
         - entrypoint-second
     ports:
         - 8080:8080
-    volumes:
-        - nginx-test:/test
-        - test1:/test1
-        - /root/test:~/test
-        - /root/test.txt:~/test.txt
     environment:
         VARIABLE: VALUE
     extra_hosts:
         - HOST:IP
 
-volumes:
-  nginx-test:
-    external: true
-  test1:
-    external: true

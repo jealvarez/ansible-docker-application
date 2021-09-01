@@ -1,8 +1,5 @@
 # **Docker Application Template**
 
-[![Build Status](https://github.com/jealvarez/docker-application/workflows/Test/badge.svg)](https://github.com/jealvarez/docker-application/actions?query=workflow%3ATest)
-[![Latest Stable Version](https://img.shields.io/github/v/release/jealvarez/docker-application?sort?newer)](https://github.com/jealvarez/docker-application/releases)
-
 Provides the configuration to run any application in a docker container.
 
 ## **Author**
@@ -11,8 +8,8 @@ Jorge Alvarez <alvarez.jeap@gmail.com>
 
 ## **Requirements**
 
-- Ansible 2.6+
-- Python 3+
+- Ansible 4.4+
+- Python 3.8+
 - Pip3
 - [direnv](https://direnv.net)
 - [pyenv](https://github.com/pyenv/pyenv)
@@ -43,6 +40,10 @@ molecule test --all
 workspace: workspace
 application_name: application
 auto_startup: y
+create_docker_compose_file: y
+create_docker_compose_override_file: y
+create_system_unit: y
+create_volumes_main_directory: y
 docker_registry_url:
 docker_registry_username:
 docker_registry_password:
@@ -50,8 +51,8 @@ docker_registry_private: n
 docker_image_name:
 docker_image_tag:
 docker_user:
-docker_command: []
-docker_entrypoint: []
+docker_commands: []
+docker_entrypoints: []
 docker_ports: []
 docker_volumes: []
 docker_environment_variables: []
@@ -92,7 +93,7 @@ docker_ports:
       - create. if the attribute is not present then will create a docker volume directory, otherwise, `n` it will assume that the docker volume already exists
 
       ```text
-      docker_volumes: 
+      docker_volumes:
         - type: volume
           source: pg-data
           destination: /var/lib/postgresql/data
@@ -134,6 +135,22 @@ docker_extra_hosts:
   - HOST2:IP2
 ```
 
+- **docker_commands**. It will define commands to be executed when the container is started.
+
+```text
+docker_commands:
+  - "--command=command-value"
+  - command command-value
+```
+
+- **docker_entrypoints**. It will define the entrypoints to be executed when the container is started.
+
+```text
+docker_commands:
+  - entrypoint
+  - entrypoint-alternative
+```
+
 ## **Playbook**
 
 ```text
@@ -141,7 +158,7 @@ docker_extra_hosts:
 - name: configure docker application
   hosts: localhost
   roles:
-    - docker-application
+    - docker_application
   vars:
     workspace: deployments
     application_name: nginx
@@ -163,7 +180,8 @@ docker_extra_hosts:
         external: false
         file: nginx.conf
     docker_environment_variables:
-      - "VAR1: VALUE1"
+      - name: VAR1
+        value: VALUE1
     docker_extra_hosts:
       - "HOST1:IP1"
 ```

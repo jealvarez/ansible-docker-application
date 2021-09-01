@@ -1,9 +1,4 @@
 ---
-- name: install the containerd rpm from a remote repository
-  yum:
-    name:  https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm
-    state: present
-
 - name: add the docker oficial repository
   get_url:
     url: https://download.docker.com/linux/centos/docker-ce.repo
@@ -11,13 +6,26 @@
 
 - name: enable docker-ce oficial repository
   ini_file:
-    dest: /etc/yum.repos.d/docer-ce.repo
+    path: /etc/yum.repos.d/docer-ce.repo
     section: 'docker-ce-stable'
-    option: enabled
+    value: enabled
 
 - name: install packages
   package:
-    name: ['docker-ce', 'docker-ce-cli', 'python3-pip']
+    name: ['iptables-services']
+    state: present
+
+- name: enable iptables
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    masked: no
+  loop: 
+    - iptables
+
+- name: install packages
+  package:
+    name: ['docker-ce', 'docker-ce-cli', 'containerd.io', 'python3-pip', 'curl', 'wget', 'unzip', 'bind-utils']
     state: present
 
 - name: check that the docker.sock exists

@@ -1,0 +1,11 @@
+---
+docker_workspace: test
+docker_application_name: nginx
+docker_auto_startup: n
+docker_create_docker_compose_file: n
+docker_create_system_unit: n
+docker_volumes:
+  - type: volume
+    source: test
+    destination: /test
+    directory: true

@@ -1,15 +1,16 @@
 ---
 - name: configure required packages
-  include: packages.yml
+  include_tasks: packages.yml
 
 - name: configure docker registry
-  include: registry.yml
+  include_tasks: registry.yml
 
 - name: configure docker application
-  include: docker-application.yml
+  include_tasks: docker-application.yml
 
 - name: configure system unit
-  include: system-unit.yml
+  include_tasks: system-unit.yml
+  when: docker_create_system_unit == 'y'
 
 - name: cleanup
-  include: cleanup.yml
+  include_tasks: cleanup.yml

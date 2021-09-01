@@ -9,7 +9,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.7]
+        python-version: [3.8.11]
 
     steps:
       - uses: actions/checkout@v1
@@ -35,9 +35,10 @@ jobs:
             stable"
           sudo apt-get update
           sudo apt-get install docker-ce docker-ce-cli containerd.io
+          echo "[defaults]\nroles_path = /etc/ansible/roles:../../ansible-roles/roles\n" > ansible.cfg
           python3 -m pip install --upgrade pip
           python3 -m pip install -r requirements.txt
       
       - name: Run Tests
         run: |
-          molecule test
+          molecule test --all

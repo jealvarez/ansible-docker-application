@@ -1,14 +1,11 @@
 galaxy_info:
+  role_name: docker_application
   author: Jorge Alvarez <alvarez.jeap@gmail.com>
   description: Configure docker application
-
   license: license (GPLv2, CC-BY, etc)
-
-  min_ansible_version: 1.2
-
-  galaxy_tags: 
+  min_ansible_version: 2.1
+  galaxy_tags:
     - docker
-
+    - docker-application
 dependencies: []
-
 allow_duplicates: false
