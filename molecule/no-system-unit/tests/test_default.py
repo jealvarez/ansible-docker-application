@@ -34,14 +34,22 @@ def test_container(host):
     assert container != None
 
 
-@pytest.mark.parametrize("path",
-                         [("/opt/test/apps/nginx/docker-compose.yml"),
-                          ("/opt/test/apps/nginx/docker-compose.override.yml"),
-                          ("/lib/systemd/system/nginx.service")])
+@pytest.mark.parametrize("path", [
+    ("/opt/test/apps/nginx/docker-compose.override.yml"),
+])
 def test_files_creation(host, path):
     file = host.file(path)
 
     assert file.exists
+
+
+@pytest.mark.parametrize("path", [
+    ("/lib/systemd/system/nginx.service"),
+])
+def test_no_files_creation(host, path):
+    file = host.file(path)
+
+    assert file.exists == False
 
 
 @pytest.mark.parametrize("path", [("/opt/test/apps/nginx/volumes/test")])
@@ -66,12 +74,8 @@ def test_bind_volumes_creation(host, path):
 
 
 @pytest.mark.parametrize("actual_file, expected_file", [
-    ("/opt/test/apps/nginx/docker-compose.yml",
-     "/root/test/resources/docker-compose-expected.yml"),
     ("/opt/test/apps/nginx/docker-compose.override.yml",
      "/root/test/resources/docker-compose-expected.override.yml"),
-    ("/lib/systemd/system/nginx.service",
-     "/root/test/resources/nginx-expected.service"),
 ])
 def test_generated_file_content(host, actual_file, expected_file):
     expected_file_content = host.file(expected_file).content

@@ -2,14 +2,14 @@
 - name: copy the application system unit
   template:
     src: system-unit.service.j2
-    dest: /lib/systemd/system/{{ application_name }}.service
+    dest: /lib/systemd/system/{{ docker_application_name }}.service
     owner: root
     group: root
     mode: u=rw,g=r,o=r
 
 - name: enable system unit
-  shell: systemctl enable {{ application_name }}
+  shell: systemctl enable {{ docker_application_name }}
 
 - name: start application service
-  shell: systemctl start {{ application_name }}
-  when: auto_startup == 'y'
+  shell: systemctl start {{ docker_application_name }}
+  when: docker_auto_startup == 'y'

@@ -1,4 +1,3 @@
-#jinja2: lstrip_blocks: True
 # =====================================================================
 # FILE GENERATED AUTOMATICALLY WITH THE CONFIGURATION MANAGEMENT TOOL
 # THIS FILE SHOULD NOT BE EDITED BY HAND
@@ -8,5 +7,5 @@ version: '3'
 
 services:
 
-  {{ docker_application_name }}:
+  nginx:
   #  environment:

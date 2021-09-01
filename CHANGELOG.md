@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## **[2.0]**
+
+- **Changed**
+  - Migrate to latest `ansible`, `molecule`, and `testinfra` packages
+
 ## **[1.2]**
 
 - **Added**

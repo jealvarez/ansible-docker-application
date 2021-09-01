@@ -1,0 +1,23 @@
+---
+- name: prepare
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: create test file under home directory
+      file: 
+        path: /root/test.txt
+        state: touch
+        owner: root
+
+    - name: create test directory under home directory
+      file: 
+        path: /root/test/resources
+        state: directory
+        owner: root
+
+    - name: copy expected docker compose files
+      copy: 
+        src: "./tests/resources/{{ item }}"
+        dest: "/root/test/resources/{{ item }}"
+      loop:
+        - docker-compose-expected.override.yml

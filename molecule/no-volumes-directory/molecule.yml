@@ -1,0 +1,36 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: instance
+    image: docker.io/jealvarez/ansible-centos:8
+    pre_build_image: true
+    privileged: true
+    capabilities:
+      - SYS_ADMIN
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+provisioner:
+  name: ansible
+verifier:
+  name: testinfra
+  options:
+    s: true
+    vv: true
+scenario:
+  test_sequence:
+    - dependency
+    - lint
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - side_effect
+    - verify
+    - cleanup
+    - destroy

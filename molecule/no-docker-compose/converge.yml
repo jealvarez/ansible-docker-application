@@ -1,0 +1,8 @@
+---
+- name: converge
+  hosts: all
+  pre_tasks:
+   - name: include test variables
+     include_vars: variables.yml
+  roles:
+    - docker-application
