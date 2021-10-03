@@ -2,4 +2,4 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - docker-application
+    - docker_application
