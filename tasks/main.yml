@@ -6,7 +6,7 @@
   include_tasks: registry.yml
 
 - name: configure docker application
-  include_tasks: docker_application.yml
+  include_tasks: docker-application.yml
 
 - name: configure system unit
   include_tasks: system-unit.yml
