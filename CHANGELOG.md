@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## **[2.01]**
+
+- **Changed**
+  - Fix docker installation enabling docker-ce oficial repository
+  - Update python version from `3.8.11` to `3.8.12`
+
 ## **[2.0]**
 
 - **Changed**
