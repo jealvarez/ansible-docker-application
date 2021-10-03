@@ -1,5 +1,8 @@
 # **Docker Application Template**
 
+[![Build Status](https://github.com/jealvarez/ansible-docker-application/workflows/Test/badge.svg)](https://github.com/jealvarez/ansible-docker-application/actions?query=workflow%3ATest)
+[![Latest Stable Version](https://img.shields.io/github/v/release/jealvarez/ansible-docker-application?sort?newer)](https://github.com/jealvarez/ansible-docker-application/releases)
+
 Provides the configuration to run any application in a docker container.
 
 ## **Author**
