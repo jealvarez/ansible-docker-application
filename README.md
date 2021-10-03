@@ -158,7 +158,7 @@ docker_commands:
 - name: configure docker application
   hosts: localhost
   roles:
-    - docker_application
+    - docker-application
   vars:
     workspace: deployments
     application_name: nginx
