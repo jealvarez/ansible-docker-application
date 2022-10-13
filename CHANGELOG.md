@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## **[2.02]**
+
+- **Added**
+  - Docker networks and labels feature
+
+- **Changed**
+  - Update python version from `3.8.12` to `3.8.14`
+
 ## **[2.01]**
 
 - **Changed**

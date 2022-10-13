@@ -49,6 +49,18 @@ services:
         {% endfor %}
         {% endif %}
     {% endif %}
+    {% if docker_labels is defined and docker_labels|length > 0 %}
+    labels:
+        {% for docker_label in docker_labels %}
+        - "{{ docker_label }}"
+        {% endfor %}
+    {% endif %}
+    {% if docker_networks is defined and docker_networks|length > 0 %}
+    networks:
+        {% for docker_network in docker_networks %}
+        - {{ docker_network.name }}
+        {% endfor %}
+    {% endif %}
     {% if docker_environment_variables is defined and docker_environment_variables|length > 0 %}
     environment:
     {% for variable in docker_environment_variables %}
@@ -65,7 +77,26 @@ services:
 {% if named_volume_entries is defined and named_volume_entries is not none and named_volume_entries %}
 volumes:
 {% for named_volume_entry in named_volume_entries %}
-  {{ docker_application_name + "-" if named_volume_entry.create is not defined else ""}}{{ named_volume_entry.source }}:
-    external: true
+    {{ docker_application_name + "-" if named_volume_entry.create is not defined else ""}}{{ named_volume_entry.source }}:
+        external: true
 {% endfor %}
+{% endif %}
+
+{% if docker_networks is defined and docker_networks|length > 0 %}
+networks:
+    {% for docker_network in docker_networks %}
+    {% if docker_network.mode == 'default' %}
+    {{ docker_network.name }}:
+        external: false
+    {% endif %}
+    {% if docker_network.mode == 'create' %}
+    {{ docker_network.name }}:
+        external: true
+    {% endif %}
+    {% if docker_network.mode == 'join' %}
+    {{ docker_network.name }}:
+        name: {{ docker_network.name }}
+        external: {{ docker_network.external | default('true') }}
+    {% endif %}
+    {% endfor %}
 {% endif %}

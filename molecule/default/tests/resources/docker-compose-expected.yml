@@ -24,13 +24,35 @@ services:
         - test1:/test1
         - /root/test:~/test
         - /root/test.txt:~/test.txt
+    labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.globalErrorsHandler.entrypoints=http"
+        - "traefik.http.routers.globalErrorsHandler.rule=HostRegexp(`{host:.+}`)"
+        - "traefik.http.routers.globalErrorsHandler-secure.entrypoints=https"
+    networks:
+        - network1
+        - network2
+        - network3
+        - network4
     environment:
         VARIABLE: VALUE
     extra_hosts:
         - HOST:IP
 
 volumes:
-  nginx-test:
-    external: true
-  test1:
-    external: true
+    nginx-test:
+        external: true
+    test1:
+        external: true
+
+networks:
+    network1:
+        external: false
+    network2:
+        external: true
+    network3:
+        name: network3
+        external: true
+    network4:
+        name: network4
+        external: false
