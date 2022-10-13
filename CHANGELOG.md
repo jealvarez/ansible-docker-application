@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## **[2.02]**
+
+- **Added**
+  - Docker networks and labels feature
+
 ## **[2.01]**
 
 - **Changed**

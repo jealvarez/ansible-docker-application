@@ -1,8 +1,5 @@
 # **Docker Application Template**
 
-[![Build Status](https://github.com/jealvarez/ansible-docker-application/workflows/Test/badge.svg)](https://github.com/jealvarez/ansible-docker-application/actions?query=workflow%3ATest)
-[![Latest Stable Version](https://img.shields.io/github/v/release/jealvarez/ansible-docker-application?sort?newer)](https://github.com/jealvarez/ansible-docker-application/releases)
-
 Provides the configuration to run any application in a docker container.
 
 ## **Author**
@@ -60,6 +57,8 @@ docker_ports: []
 docker_volumes: []
 docker_environment_variables: []
 docker_extra_hosts: []
+docker_networks: []
+docker_labels: []
 ```
 
 #### **Variables Description**
@@ -154,6 +153,28 @@ docker_commands:
   - entrypoint-alternative
 ```
 
+- **docker_networks**. It will define the docker networks to create when the container is started.
+
+  - **network modes**:
+    - **default**. It will create an internal docker network
+    - **create**. It will create an external docker network
+    - **join**. It will join an either internal or external docker network
+  - **name**. Name of the docker network
+  - **external**. **Required** only for `join` mode. The values can be `true` or `false`. Default `true`
+
+```text
+docker_networks:
+  - mode: default
+    name: network1
+  - mode: create
+    name: network2
+  - mode: join
+    name: network3
+  - mode: join
+    name: network4
+    external: 'false'
+```
+
 ## **Playbook**
 
 ```text
@@ -161,7 +182,7 @@ docker_commands:
 - name: configure docker application
   hosts: localhost
   roles:
-    - docker_application
+    - docker-application
   vars:
     workspace: deployments
     application_name: nginx
@@ -187,4 +208,19 @@ docker_commands:
         value: VALUE1
     docker_extra_hosts:
       - "HOST1:IP1"
+    docker_networks:
+      - mode: default
+        name: network1
+      - mode: create
+        name: network2
+      - mode: join
+        name: network3
+      - mode: join
+        name: network4
+        external: 'false'
+    docker_labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.globalErrorsHandler.entrypoints=http"
+      - "traefik.http.routers.globalErrorsHandler.rule=HostRegexp(`{host:.+}`)"
+      - "traefik.http.routers.globalErrorsHandler-secure.entrypoints=https"
 ```

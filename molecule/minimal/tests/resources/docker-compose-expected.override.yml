@@ -1,0 +1,11 @@
+# =====================================================================
+# FILE GENERATED AUTOMATICALLY WITH THE CONFIGURATION MANAGEMENT TOOL
+# THIS FILE SHOULD NOT BE EDITED BY HAND
+# =====================================================================
+
+version: '3'
+
+services:
+
+  nginx:
+  #  environment:

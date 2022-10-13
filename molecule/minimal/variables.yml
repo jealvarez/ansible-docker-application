@@ -1,0 +1,10 @@
+---
+docker_workspace: test
+docker_application_name: nginx
+docker_auto_startup: n
+docker_registry_private: n
+docker_container_name: nginx
+docker_image_name: nginx
+docker_image_tag: latest
+docker_ports:
+  - "8080:8080"

@@ -49,6 +49,14 @@
   loop: "{{ bound_volume_entries }}"
   when: bound_volume_entries is defined and item.external == false
 
+- name: create docker network
+  shell: |
+          if [ ! "$(docker network ls | grep {{ item.name }})" ]; then
+            docker network create {{ item.name }}
+          fi
+  loop: "{{ docker_networks }}"
+  when: item.mode == 'create'
+
 - name: copy the application docker compose file
   template:
     src: docker-compose.yml.j2

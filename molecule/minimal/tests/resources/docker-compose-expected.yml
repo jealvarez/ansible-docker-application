@@ -10,18 +10,7 @@ services:
   nginx:
     container_name: nginx
     image: nginx:latest
-    command:
-        - command1=command1
-        - --command2 command2
-        - --command3=command3
-    entrypoint:
-        - entrypoint-first
-        - entrypoint-second
     ports:
         - 8080:8080
-    environment:
-        VARIABLE: VALUE
-    extra_hosts:
-        - HOST:IP
 
 
